@@ -10,6 +10,13 @@ jobs:
           echo github.event_name: ${{ github.event_name }}
           echo github.ref: ${{ github.ref }}
           echo github.event.head_commit.message: ${{ github.event.head_commit.message }}
+          PR_NUMBER=$(echo ${{ github.event.head_commit.message }} | sed -e 's/Merge pull request #\(.*\) from .*/\1/')
+          echo $PR_NUMBER
+          PR_TITLE=$(echo ${{ github.event.head_commit.message }} | sed -e 's/^.*\\n\\n\([^\n]*\)$/\1/')
+          echo $PR_TITLE
+          PR_URL=$(echo ${{ github.event.repository.pulls_url }} | sed -e 's!{/number}!/'$PR_NUMBER'!')
+          echo $PR_URL
+          echo #$PR_NUMBER: $PR_TITLE ($PR_URL)
           cat $GITHUB_EVENT_PATH
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
