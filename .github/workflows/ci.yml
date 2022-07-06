@@ -9,9 +9,9 @@ jobs:
         run: |
           cat $GITHUB_EVENT_PATH
           echo "github.event.head_commit.message: ${{ github.event.head_commit.message }}"
-          PR_NUMBER=$(echo "${{ github.event.head_commit.message }}" | sed -e 's/Merge pull request #\(.*\) from .*/\1/')
+          PR_NUMBER=$(echo "${{ github.event.head_commit.message }}" | tr '\n' '\r' | sed -e 's/Merge pull request #\(.*\) from .*/\1/')
           echo "PR_NUMBER: $PR_NUMBER"
-          PR_TITLE=$(echo "${{ github.event.head_commit.message }}" | sed -e 's/^.*\\n\\n\([^\n]*\)$/\1/')
+          PR_TITLE=$(echo "${{ github.event.head_commit.message }}" | tr '\n' '\r' | sed -e 's/^.*\\r\\r\([^\n]*\)$/\1/')
           echo "PR_TITLE: $PR_TITLE"
           echo github.event.repository.pulls_url: ${{ github.event.repository.pulls_url }}
           PR_URL=$(echo "${{ github.event.repository.pulls_url }}" | sed -e 's!{/number}!/'$PR_NUMBER'!')
