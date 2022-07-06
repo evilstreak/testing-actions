@@ -8,13 +8,7 @@ jobs:
       - name: the echo
         run: |
           cat $GITHUB_EVENT_PATH
-          pr_number=$(echo "${{ github.event.head_commit.message }}" | tr '\n' '\f' | sed -e 's/Merge pull request #\(.*\) from .*/\1/')
-          case $pr_number in
-            ''|*[!0-9]*) echo "couldn't find PR #" && exit ;;
-            *) echo "found PR #: $pr_number" ;;
-          esac
-          pr_title=$(echo "${{ github.event.head_commit.message }}" | tr '\n' '\f' | sed -e 's/^.*\f\f\(.*\)$/\1/')
-          pr_url=$(echo "${{ github.event.repository.pulls_url }}" | sed -e 's!{/number}!/'$pr_number'!')
-          echo "[#$pr_number: $pr_title]($pr_url)"
+          first_line=$(echo "${{ github.event.head_commit.message }}" | tr '\n' '\f' | sed -e 's/^\([^\f]*\).*$/\1/')
+          echo "[$first_line](${{ github.event.head_commit.url }})"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
