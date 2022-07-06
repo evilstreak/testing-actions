@@ -15,8 +15,6 @@ jobs:
           echo github.event.pull_request.number: ${{ github.event.pull_request.number }}
           echo github.event.pull_request.title: ${{ github.event.pull_request.title }}
           echo github.event.pull_request.html_url: ${{ github.event.pull_request.html_url }}
-          gh pr view
-          echo GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH
           cat $GITHUB_EVENT_PATH
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -35,7 +33,6 @@ jobs:
           echo github.event.pull_request.number: ${{ github.event.pull_request.number }}
           echo github.event.pull_request.title: ${{ github.event.pull_request.title }}
           echo github.event.pull_request.html_url: ${{ github.event.pull_request.html_url }}
-          gh pr view
           echo GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH
           cat $GITHUB_EVENT_PATH
         env:
@@ -55,7 +52,6 @@ jobs:
           echo github.event.pull_request.number: ${{ github.event.pull_request.number }}
           echo github.event.pull_request.title: ${{ github.event.pull_request.title }}
           echo github.event.pull_request.html_url: ${{ github.event.pull_request.html_url }}
-          gh pr view
           echo GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH
           cat $GITHUB_EVENT_PATH
         env:
