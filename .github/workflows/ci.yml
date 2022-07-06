@@ -7,15 +7,13 @@ jobs:
       - uses: actions/checkout@v2
       - name: the echo
         run: |
-          echo "${{ github.event.head_commit.message }}"
           pr_number=$(echo "${{ github.event.head_commit.message }}" | tr '\n' '\f' | sed -e 's/Merge pull request #\(.*\) from .*/\1/')
           case $pr_number in
             ''|*[!0-9]*) echo "couldn't find PR #" && exit ;;
             *) echo "found PR #: $pr_number" ;;
           esac
           pr_title=$(echo "${{ github.event.head_commit.message }}" | tr '\n' '\f' | sed -e 's/^.*\f\f\(.*\)$/\1/')
-          echo "found a title: $pr_title; some other stuff"
-          pr_url=$(echo "${{ github.event.repository.pulls_url }}" | sed -e 's!{/number}!/'$PR_NUMBER'!')
+          pr_url=$(echo "${{ github.event.repository.pulls_url }}" | sed -e 's!{/number}!/'$pr_number'!')
           echo "[#$pr_number: $pr_title]($pr_url)"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
